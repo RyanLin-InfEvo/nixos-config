@@ -4,6 +4,8 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-master.url = "github:NixOS/nixpkgs/master";
 
     whisper-dictation.url = "github:jacopone/whisper-dictation";
 
@@ -17,21 +19,40 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, whisper-dictation, ... }@inputs: {
+  outputs = { self, nixpkgs, nixpkgs-unstable, nixpkgs-master, home-manager, whisper-dictation, ... }@inputs: {
     nixosConfigurations."ryan-Desktop" = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
+
       # 透過 specialArgs 將 inputs 傳遞給其他 nix 檔案
-      specialArgs = { inherit inputs; };
+      specialArgs = {
+        inherit inputs;
+        unstable = import nixpkgs-unstable {
+            system = "x86_64-linux";
+            config.allowUnfree = true;
+        };
+        master = import nixpkgs-master {
+            system = "x86_64-linux";
+            config.allowUnfree = true;
+        };
+      };
       modules = [
         ./configuration.nix
-        home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.extraSpecialArgs = { inherit inputs; }; # 將 inputs 傳遞給 home.nix
-          home-manager.users.ryan = import ./home.nix;
-        }
       ];
+    };
+    homeConfigurations."ryan" = home-manager.lib.homeManagerConfiguration {
+      pkgs = nixpkgs.legacyPackages."x86_64-linux";
+      extraSpecialArgs = {
+        inherit inputs;
+        unstable = import nixpkgs-unstable {
+          system = "x86_64-linux";
+          config.allowUnfree = true;
+        };
+        master = import nixpkgs-master {
+          system = "x86_64-linux";
+          config.allowUnfree = true;
+        };
+      };
+      modules = [ ./home.nix ];
     };
   };
 }

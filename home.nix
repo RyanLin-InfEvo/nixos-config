@@ -2,38 +2,27 @@
 { config, pkgs, inputs, ... }:
 
 {
+  imports = [
+    ./modules/home/packages.nix
+    ./modules/home/programs.nix
+    ./modules/home/services.nix
+  ];
+  
+  home.stateVersion = "25.11";
+  nixpkgs.config.allowUnfree = true;
 
-# 這裡開始是 ryan 的 Home Manager 內部設定
-home.stateVersion = "25.11";
+  home.username = "ryan";
+  home.homeDirectory = "/home/ryan";
 
-home.packages = with pkgs; [
-    kdePackages.kate
-    kdePackages.kcalc
-    youtube-music
-    activitywatch
-    google-chrome
-    vscode
-    obsidian
-    libreoffice-qt
-    bitwarden-desktop
-    localsend
-    kdePackages.okular
-    texlive.combined.scheme-full
-    inputs.antigravity-nix.packages.${pkgs.system}.default
-];
+  home.sessionVariables = {
+    # GEMINI_SANDBOX is NOT supported for custom commands like 'bwai'
+    # Use 'bwai' directly to run gemini if needed: bwai gemini ...
+  };
 
-programs.git = {
-    enable = true;
-    settings = {
-    user.name = "RyanLin-InfEvo";
-    user.email = "ryanarduino0410@gmail.com";
-    };
-};
-
-xdg.configFile."fcitx5/conf/classicui.conf".text = ''
-    Theme=OriLight
-    DarkTheme=OriDark
-    UseDarkTheme=True
-'';
+  xdg.configFile."fcitx5/conf/classicui.conf".text = ''
+      Theme=OriLight
+      DarkTheme=OriDark
+      UseDarkTheme=True
+  '';
 
 }

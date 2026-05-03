@@ -1,0 +1,14 @@
+# Nix build output
+result
+result-*
+
+# Deb package artifacts
+*.deb
+*.tar.gz
+debian-binary
+
+# Editor backup files
+*~
+*.swp
+.vscode/
+.idea/

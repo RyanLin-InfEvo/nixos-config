@@ -1,14 +1,22 @@
 # 定義主機名稱變數，對應你 flake.nix 中的 nixosConfigurations."ryan-Desktop"
 FLAKE = .#ryan-Desktop
+FLAKE_HOME = .#ryan
 
 # 預設執行的指令：當你在終端機只輸入 `make` 時，預設執行 `switch`
 default: switch
 
-# 套用設定：自動將變更加入 Git 索引，並執行重建
-# 客觀依據：Nix Flake 只能讀取已被 Git 追蹤的檔案，先執行 git add 可避免報錯
-switch:
+# 僅套用系統更新 (需要 sudo)
+switch-sys:
 	git add .
 	sudo nixos-rebuild switch --flake $(FLAKE)
+
+# 僅套用個人設定 (不需 sudo，改 MPV 用這個)
+switch-home:
+	git add .
+	home-manager switch --flake $(FLAKE_HOME) -b backup
+
+# 一鍵全更新
+switch-all: switch-sys switch-home
 
 # 測試設定：立即生效，但不會寫入開機選單（重開機後還原）
 # 適用場景：測試有風險的設定（例如顯示卡驅動、網路設定）
