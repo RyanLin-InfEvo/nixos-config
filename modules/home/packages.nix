@@ -6,6 +6,7 @@ let
   google-antigravity = pkgs.callPackage ./custom-pkgs/google-antigravity/default.nix {};
   google-antigravity-ide = pkgs.callPackage ./custom-pkgs/google-antigravity-ide/default.nix {};
   gitnexus = pkgs.callPackage ./custom-pkgs/gitnexus/default.nix {};
+  pearl-desktop-wallet = pkgs.callPackage ./custom-pkgs/pearl-desktop-wallet/default.nix {};
 in
 {
   home.packages = with pkgs; [
@@ -41,7 +42,7 @@ in
     google-antigravity
     google-antigravity-ide
     gitnexus
-
+    pearl-desktop-wallet
   ] ++ [
     # from unstable
     # unstable.gemini-cli
