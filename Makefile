@@ -10,7 +10,7 @@ switch-sys:
 	git add .
 	sudo nixos-rebuild switch --flake $(FLAKE)
 
-# 僅套用個人設定 (不需 sudo，改 MPV 用這個)
+# 僅套用個人設定 (不需 sudo)
 switch-home:
 	git add .
 	home-manager switch --flake $(FLAKE_HOME) -b backup
@@ -33,6 +33,23 @@ boot:
 # 更新套件庫：更新 flake.lock 中的所有輸入來源（如 nixpkgs 版本）
 update:
 	nix flake update
+
+# 自動偵測最新版 google-antigravity 與 antigravity-cli 並套用更新
+update-agy:
+	python3 modules/home/custom-pkgs/google-antigravity/update.py
+	python3 modules/home/custom-pkgs/antigravity-cli/update.py
+	python3 modules/home/custom-pkgs/google-antigravity-ide/update.py
+	$(MAKE) switch-home
+
+# 更新 Master 分支：僅更新 nixpkgs-master 並套用個人設定
+update-master:
+	nix flake update nixpkgs-master
+	$(MAKE) switch-home
+
+# 更新 Unstable 分支：僅更新 nixpkgs-unstable 並套用個人設定（用於更新 vscode 等）
+update-unstable:
+	nix flake update nixpkgs-unstable
+	$(MAKE) switch-home
 
 # 清理系統空間：刪除舊的系統世代與未使用的快取
 gc:

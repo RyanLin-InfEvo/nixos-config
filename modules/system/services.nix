@@ -11,7 +11,7 @@
   };
 
   services.ollama = {
-    enable = true;
+    enable = false;
     acceleration = "cuda";
     package = unstable.ollama; #.override { acceleration = "cuda" }
     environmentVariables = {

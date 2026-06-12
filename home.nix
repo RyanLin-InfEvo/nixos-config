@@ -15,8 +15,8 @@
   home.homeDirectory = "/home/ryan";
 
   home.sessionVariables = {
-    # GEMINI_SANDBOX is NOT supported for custom commands like 'bwai'
-    # Use 'bwai' directly to run gemini if needed: bwai gemini ...
+    # ANTIGRAVITY_SANDBOX is supported for custom commands like 'bwai'
+    # Use 'bwai' directly to run agy if needed: bwai agy ...
   };
 
   xdg.configFile."fcitx5/conf/classicui.conf".text = ''

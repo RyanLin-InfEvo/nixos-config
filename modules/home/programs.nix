@@ -38,7 +38,7 @@
 
 
   programs.obs-studio = {
-    enable = true;
+    enable = false;
     package = pkgs.obs-studio.override {
       ffmpeg = pkgs.ffmpeg_7-full;
     };
@@ -57,9 +57,15 @@
     enable = true;
   };
 
+  programs.fzf = {
+    enable = true;
+    enableBashIntegration = true;
+  };
+
   programs.zoxide = {
     enable = true;
     enableBashIntegration = true;
+    options = [ "--cmd cd" ];
   };
 
   home.shellAliases = {
@@ -69,7 +75,6 @@
     la = "eza -a";
     lt = "eza --tree";
     lla = "eza -la";
-    cd = "z";
   };
 
 }

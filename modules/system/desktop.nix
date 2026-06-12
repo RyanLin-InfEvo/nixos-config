@@ -49,8 +49,11 @@
     fcitx5.waylandFrontend = true;
     fcitx5.addons = with pkgs; [
       fcitx5-chewing
-      qt6Packages.fcitx5-chinese-addons
+      kdePackages.fcitx5-chinese-addons
       fcitx5-gtk
+      libsForQt5.fcitx5-qt
+      kdePackages.fcitx5-qt
+      kdePackages.fcitx5-configtool
       # Ori-fcitx5 OriDark theme
       # https://github.com/Reverier-Xu/Ori-fcitx5
       (stdenvNoCC.mkDerivation {
