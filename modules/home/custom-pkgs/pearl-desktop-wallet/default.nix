@@ -2,11 +2,11 @@
 
 pkgs.stdenv.mkDerivation rec {
   pname = "pearl-desktop-wallet";
-  version = "1.0.0";
+  version = "2.0.0";
 
   src = pkgs.fetchurl {
-    url = "https://github.com/pearl-research-labs/pearl/releases/download/pearl-wallet-v1.0.0/pearl-desktop-wallet_1.0.0_amd64.deb";
-    sha256 = "1ay3bxkmnxsnc46jwb08p1fsjwps2bxz4v3z4qhqnamq95i8rx2g";
+    url = "https://github.com/pearl-research-labs/pearl/releases/download/pearl-wallet-v2.0.0/pearl-desktop-wallet_2.0.0_amd64.deb";
+    sha256 = "01k59prpawkxg3bjlr9an4bfgx1m2w1pa3krsk8l89va3zx5zryz";
   };
 
   nativeBuildInputs = [
