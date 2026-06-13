@@ -33,4 +33,7 @@
   };
 
   services.xserver.videoDrivers = [ "nvidia" ];
+
+  # Desktop-specific Ollama settings
+  services.ollama.acceleration = "cuda";
 }

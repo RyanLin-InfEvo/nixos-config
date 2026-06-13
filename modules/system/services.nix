@@ -12,7 +12,6 @@
 
   services.ollama = {
     enable = false;
-    acceleration = "cuda";
     package = unstable.ollama; #.override { acceleration = "cuda" }
     environmentVariables = {
       OLLAMA_NUM_CTX = "32768";
