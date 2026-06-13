@@ -36,7 +36,26 @@
         };
       };
       modules = [
-        ./configuration.nix
+        ./hosts/ryan-Desktop
+      ];
+    };
+
+    nixosConfigurations."ryan-dynabook" = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+
+      specialArgs = {
+        inherit inputs;
+        unstable = import nixpkgs-unstable {
+            system = "x86_64-linux";
+            config.allowUnfree = true;
+        };
+        master = import nixpkgs-master {
+            system = "x86_64-linux";
+            config.allowUnfree = true;
+        };
+      };
+      modules = [
+        ./hosts/ryan-dynabook
       ];
     };
     homeConfigurations."ryan" = home-manager.lib.homeManagerConfiguration {

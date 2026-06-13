@@ -1,5 +1,11 @@
-# 定義主機名稱變數，對應你 flake.nix 中的 nixosConfigurations."ryan-Desktop"
-FLAKE = .#ryan-Desktop
+# 自動偵測主機名稱，預設為 ryan-Desktop，若為 ryan-dynabook 則切換
+HOSTNAME := $(shell hostname)
+ifeq ($(HOSTNAME), ryan-dynabook)
+  FLAKE = .#ryan-dynabook
+else
+  FLAKE = .#ryan-Desktop
+endif
+
 FLAKE_HOME = .#ryan
 
 # 預設執行的指令：當你在終端機只輸入 `make` 時，預設執行 `switch`

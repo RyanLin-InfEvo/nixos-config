@@ -10,7 +10,6 @@
       efi.canTouchEfiVariables = true;
     };
     kernelParams = [ "quiet" "splash" "acpi_enforce_resources=lax" ];
-    kernelModules = [ "nct6775" "asus_ec_sensors" ];
     # blacklistedKernelModules = [ "spd5118" ];
     # Use the latest kernel for best hardware support (i5-14500 / Raptor Lake)
     kernelPackages = pkgs.linuxPackages_zen;
@@ -23,7 +22,6 @@
     };
     tmp = {
       useTmpfs = true;
-      tmpfsSize = "32G";
     };
   };
 

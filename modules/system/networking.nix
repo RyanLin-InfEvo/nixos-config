@@ -1,7 +1,6 @@
 { config, pkgs, ... }:
 {
   networking = {
-    hostName = "ryan-Desktop";
     networkmanager.enable = true;
     # Firewall (ufw equivalent)
     firewall = {
