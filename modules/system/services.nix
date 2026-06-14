@@ -4,7 +4,7 @@
   services.syncthing = {
     enable = true;
     user = "ryan";
-    dataDir = "/home/ryan";
+    dataDir = "/home/ryan/.local/share/syncthing";
     configDir = "/home/ryan/.config/syncthing";
 
     guiAddress = "127.0.0.1:8384";

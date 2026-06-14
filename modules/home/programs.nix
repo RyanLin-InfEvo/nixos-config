@@ -25,7 +25,7 @@
     config = {
       vo = "gpu-next";
       gpu-api = "vulkan";
-      hwdec = "nvdec";
+      hwdec = "auto";
       glsl-shaders = "~~/shaders/FSRCNNX_x2_16-0-4-1.glsl";
     };
     scripts = with pkgs.mpvScripts; [

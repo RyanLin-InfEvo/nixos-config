@@ -41,7 +41,7 @@
       ];
       ExecStart = "${pkgs.writeShellScript "update-antigravity" ''
         set -euo pipefail
-        cd /home/ryan/nixos-config
+        cd ${config.home.homeDirectory}/nixos-config
         python3 modules/home/custom-pkgs/google-antigravity/update.py --auto
       ''}";
     };
