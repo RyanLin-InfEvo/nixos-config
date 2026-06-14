@@ -21,4 +21,9 @@
       libvdpau-va-gl
     ];
   };
+
+  # Dynabook-specific system packages
+  environment.systemPackages = with pkgs; [
+    nvtopPackages.intel
+  ];
 }

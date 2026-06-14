@@ -28,7 +28,6 @@
     file
     htop
     btop
-    nvtopPackages.nvidia
     strace
     rsync
     bc

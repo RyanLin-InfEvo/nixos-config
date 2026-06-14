@@ -36,4 +36,9 @@
 
   # Desktop-specific Ollama settings
   services.ollama.acceleration = "cuda";
+
+  # Desktop-specific system packages
+  environment.systemPackages = with pkgs; [
+    nvtopPackages.nvidia
+  ];
 }
