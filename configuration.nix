@@ -23,7 +23,6 @@
   nixpkgs.config = {
     allowUnfree = true;
     permittedInsecurePackages = [
-      "electron-39.8.10"
     ];
     # cudaSupport = true;
     # 例如 RTX 30 系列是 "8.6"，RTX 40 系列是 "8.9"，A100 是 "8.0"

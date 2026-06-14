@@ -22,7 +22,7 @@ in
     fzf
     obsidian
     libreoffice-qt
-    bitwarden-desktop
+    # bitwarden-desktop
     localsend
     
     nodejs
