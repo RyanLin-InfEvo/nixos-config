@@ -39,6 +39,7 @@ boot:
 # 更新套件庫：更新 flake.lock 中的所有輸入來源（如 nixpkgs 版本）
 update:
 	nix flake update
+	$(MAKE) update-agy
 
 # 自動偵測最新版 google-antigravity 與 antigravity-cli 並套用更新
 update-agy:

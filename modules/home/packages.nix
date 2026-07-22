@@ -14,7 +14,8 @@ in
     kdePackages.kcalc
     kdePackages.filelight
     kdePackages.okular
-    youtube-music
+    qpdfview
+    unstable.pear-desktop
     activitywatch
     google-chrome
     zoom-us
@@ -41,9 +42,13 @@ in
     google-antigravity-ide
     gitnexus
     pearl-desktop-wallet
+    rustdesk
   ] ++ [
     # from unstable
     # unstable.gemini-cli
+    unstable.siril
+    unstable.gimp
+    unstable.darktable
     master.gemini-cli
   ];
 }

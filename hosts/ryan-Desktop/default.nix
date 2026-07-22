@@ -28,6 +28,7 @@
       powerManagement.enable = true;
       open = true;
       nvidiaSettings = true;
+      nvidiaPersistenced = true;
       package = config.boot.kernelPackages.nvidiaPackages.stable;
     };
   };
@@ -35,7 +36,7 @@
   services.xserver.videoDrivers = [ "nvidia" ];
 
   # Desktop-specific Ollama settings
-  services.ollama.acceleration = "cuda";
+  # services.ollama.package = pkgs.ollama-cuda;
 
   # Desktop-specific system packages
   environment.systemPackages = with pkgs; [

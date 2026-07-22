@@ -14,6 +14,8 @@
 
   environment.systemPackages = with pkgs; [
 
+    
+
     # --- Whisper Dictation ---
     inputs.whisper-dictation.packages.${pkgs.system}.default
 
@@ -96,6 +98,20 @@
     dmidecode
     efibootmgr
     smartmontools
+    hplipWithPlugin
+
+    # --- Scanning & Book Digitization ---
+    (scantailor-advanced.overrideAttrs (oldAttrs: {
+      postInstall = (oldAttrs.postInstall or "") + ''
+        # Add StartupWMClass to fix taskbar grouping and icon matching
+        echo "StartupWMClass=scantailor" >> $out/share/applications/scantailor.desktop
+      '';
+    }))
+    gscan2pdf
+    ocrmypdf
+    gimagereader
+    xnconvert
+    (tesseract.override { enableLanguages = [ "eng" "chi_tra" "chi_sim" ]; })
 
   ];
 }
