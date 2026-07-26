@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, inputs, lib, hostName, ... }:
 {
   programs.bash.enable = true;
 
@@ -37,7 +37,7 @@
   };
 
 
-  programs.obs-studio = {
+  programs.obs-studio = lib.mkIf (hostName == "ryan-Desktop"){
     enable = false;
     package = pkgs.obs-studio.override {
       ffmpeg = pkgs.ffmpeg_7-full;

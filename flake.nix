@@ -34,6 +34,7 @@
             system = "x86_64-linux";
             config.allowUnfree = true;
         };
+        hostName = "ryan-Desktop";
       };
       modules = [
         ./hosts/ryan-Desktop
@@ -53,6 +54,7 @@
             system = "x86_64-linux";
             config.allowUnfree = true;
         };
+        hostName = "ryan-dynabook";
       };
       modules = [
         ./hosts/ryan-dynabook
@@ -70,6 +72,8 @@
           system = "x86_64-linux";
           config.allowUnfree = true;
         };
+        hostName = "ryan-Desktop";
+        # hostName = "ryan-dynabook";
       };
       modules = [ ./home.nix ];
     };

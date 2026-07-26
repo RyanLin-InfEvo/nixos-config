@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, unstable, master, ... }:
+{ config, pkgs, inputs, unstable, master, lib, hostName,... }:
 let
   openwork = pkgs.callPackage ./custom-pkgs/openwork/default.nix {};
   antigravity-cli = pkgs.callPackage ./custom-pkgs/antigravity-cli/default.nix {};
@@ -8,31 +8,33 @@ let
   pearl-desktop-wallet = pkgs.callPackage ./custom-pkgs/pearl-desktop-wallet/default.nix {};
 in
 {
-  home.packages = with pkgs; [
+  home.packages = 
+  (with pkgs; [
     # 系統與常用套件
     kdePackages.kate
     kdePackages.kcalc
     kdePackages.filelight
+
+    # PDF
     kdePackages.okular
     qpdfview
+    
     unstable.pear-desktop
-    activitywatch
+    
     kdotool
     google-chrome
-    zoom-us
-    
-    fzf
+    # zoom-us
+
     obsidian
     libreoffice-qt
-    # bitwarden-desktop
+
     localsend
-    
-    nodejs
+        
     bubblewrap
     sox
     appimage-run
     
-    inputs.whisper-dictation.packages.${stdenv.hostPlatform.system}.default
+    # inputs.whisper-dictation.packages.${stdenv.hostPlatform.system}.default
     
     # Development & Agent
     # opencode
@@ -43,16 +45,20 @@ in
     google-antigravity
     google-antigravity-ide
     gitnexus
-    pearl-desktop-wallet
+
+    # Remote
     rustdesk
-  ] ++ [
-    # from unstable
-    # unstable.gemini-cli
-    unstable.siril
-    unstable.gimp
+
+    # Crypto
+    # pearl-desktop-wallet
+
+    # Photo Editing
     unstable.darktable
-    unstable.art
-    unstable.krita
-    master.gemini-cli
-  ];
+    unstable.gimp
+  ]) ++ (lib.optionals (hostName == "ryan-Desktop")) (with pkgs; [
+    unstable.siril
+    nodejs
+    activitywatch
+    #unstable.art
+  ]);
 }

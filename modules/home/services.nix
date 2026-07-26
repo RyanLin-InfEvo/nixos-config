@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, inputs, lib, hostName, ... }:
 
 {
   home.file.".config/whisper-dictation/config.yaml".text = ''
@@ -10,7 +10,8 @@
       language: "zh"
       model: "base"
   '';
-  systemd.user.services.whisper-dictation = {
+  /*
+  systemd.user.services.whisper-dictation = lib.mkIf (config.networking.hostName == "disable"){
     Unit = {
       Description = "Whisper Dictation Service";
     };
@@ -29,6 +30,7 @@
       RestartSec = "5";
     };
   };
+  */
 
   systemd.user.services.update-antigravity = {
     Unit = {
@@ -65,7 +67,7 @@
     autostart_modules = ["aw-server", "aw-watcher-afk"]
   '';
 
-  systemd.user.services.aw-watcher-window-kwin = {
+  systemd.user.services.aw-watcher-window-kwin = lib.mkIf (hostName == "ryan-Desktop"){
     Unit = {
       Description = "ActivityWatch Window Watcher for KDE Wayland (using kdotool)";
       After = [ "graphical-session.target" ];
