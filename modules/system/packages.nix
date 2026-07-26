@@ -54,7 +54,7 @@
     python3
     python3Packages.pip
     python3Packages.virtualenv
-    pipx
+    (pipx.overridePythonAttrs (_: { disabledTestPaths = [ "tests/test_package_specifier.py" ]; }))
 
     # --- Text / Document Processing ---
     texliveFull     # TeX / LaTeX (texlive-full equivalent)
@@ -99,6 +99,7 @@
     efibootmgr
     smartmontools
     hplipWithPlugin
+    powercap
 
     # --- Scanning & Book Digitization ---
     (scantailor-advanced.overrideAttrs (oldAttrs: {

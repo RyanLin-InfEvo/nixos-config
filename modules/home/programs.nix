@@ -77,4 +77,14 @@
     lla = "eza -la";
   };
 
+  xdg.desktopEntries.darktable-appimage = {
+    name = "Darktable (AI AppImage)";
+    comment = "Organize and develop raw images with AI support";
+    exec = "${pkgs.appimage-run}/bin/appimage-run /home/ryan/Applications/darktable.AppImage %U";
+    icon = "darktable";
+    categories = [ "Graphics" "Photography" ];
+    terminal = false;
+    mimeType = [ "image/x-dcraw" "image/x-canon-cr2" "image/x-nikon-nef" "image/x-sony-arw" ];
+  };
+
 }

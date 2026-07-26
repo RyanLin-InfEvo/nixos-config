@@ -17,6 +17,7 @@ in
     qpdfview
     unstable.pear-desktop
     activitywatch
+    kdotool
     google-chrome
     zoom-us
     
@@ -29,6 +30,7 @@ in
     nodejs
     bubblewrap
     sox
+    appimage-run
     
     inputs.whisper-dictation.packages.${stdenv.hostPlatform.system}.default
     
@@ -49,6 +51,8 @@ in
     unstable.siril
     unstable.gimp
     unstable.darktable
+    unstable.art
+    unstable.krita
     master.gemini-cli
   ];
 }

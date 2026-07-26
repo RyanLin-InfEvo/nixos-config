@@ -59,4 +59,99 @@
       WantedBy = [ "timers.target" ];
     };
   };
+
+  home.file.".config/activitywatch/aw-qt/aw-qt.toml".text = ''
+    [aw-qt]
+    autostart_modules = ["aw-server", "aw-watcher-afk"]
+  '';
+
+  systemd.user.services.aw-watcher-window-kwin = {
+    Unit = {
+      Description = "ActivityWatch Window Watcher for KDE Wayland (using kdotool)";
+      After = [ "graphical-session.target" ];
+    };
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
+    Service = {
+      Environment = [
+        "PATH=${pkgs.lib.makeBinPath [ pkgs.kdotool pkgs.python3 pkgs.bash pkgs.coreutils ]}"
+      ];
+      ExecStart = "${pkgs.writeScript "aw-watcher-window-kwin" ''
+        #!${pkgs.python3}/bin/python3
+        import json
+        import os
+        import socket
+        import subprocess
+        import sys
+        import time
+        import urllib.request
+
+        HOSTNAME = socket.gethostname()
+        BUCKET_NAME = f"aw-watcher-window_{HOSTNAME}"
+        SERVER_URL = "http://127.0.0.1:5600"
+
+        def create_bucket():
+            url = f"{SERVER_URL}/api/0/buckets/{BUCKET_NAME}"
+            data = json.dumps({
+                "client": "aw-watcher-window-kwin",
+                "type": "currentwindow",
+                "hostname": HOSTNAME
+            }).encode("utf-8")
+            req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json"})
+            try:
+                urllib.request.urlopen(req)
+            except Exception:
+                pass
+
+        def get_active_window():
+            try:
+                res_win = subprocess.run(["kdotool", "getactivewindow"], capture_output=True, text=True, timeout=1)
+                if res_win.returncode != 0:
+                    return None, None
+                wid = res_win.stdout.strip()
+                if not wid:
+                    return None, None
+
+                res_title = subprocess.run(["kdotool", "getwindowname", wid], capture_output=True, text=True, timeout=1)
+                res_app = subprocess.run(["kdotool", "getwindowclassname", wid], capture_output=True, text=True, timeout=1)
+
+                title = res_title.stdout.strip() if res_title.returncode == 0 else ""
+                app = res_app.stdout.strip() if res_app.returncode == 0 else ""
+                return app, title
+            except Exception:
+                return None, None
+
+        def send_heartbeat(app, title):
+            url = f"{SERVER_URL}/api/0/buckets/{BUCKET_NAME}/heartbeat?pulsetime=5"
+            payload = {
+                "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+                "duration": 0.0,
+                "data": {
+                    "app": app or "",
+                    "title": title or ""
+                }
+            }
+            data = json.dumps(payload).encode("utf-8")
+            req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json"})
+            try:
+                urllib.request.urlopen(req)
+            except Exception:
+                pass
+
+        def main():
+            create_bucket()
+            while True:
+                app, title = get_active_window()
+                if app is not None and title is not None:
+                    send_heartbeat(app, title)
+                time.sleep(1)
+
+        if __name__ == "__main__":
+            main()
+      ''}";
+      Restart = "always";
+      RestartSec = "3";
+    };
+  };
 }
